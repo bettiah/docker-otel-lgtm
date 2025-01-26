@@ -11,6 +11,18 @@ spec:
       protocol: TCP
       port: 3000
       targetPort: 3000
+    - name: metrics
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+    - name: traces
+      protocol: TCP
+      port: 4418
+      targetPort: 4418
+    - name: logs
+      protocol: TCP
+      port: 3100
+      targetPort: 3100
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,6 +43,9 @@ spec:
           image: ghcr.io/bettiah/docker-otel-lgtm:latest
           ports:
             - containerPort: 3000
+            - containerPort: 9090
+            - containerPort: 4418
+            - containerPort: 3100
           readinessProbe:
             exec:
               command:
