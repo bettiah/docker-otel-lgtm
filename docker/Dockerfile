@@ -48,12 +48,6 @@ RUN bash -c 'ARCHIVE=loki-linux-"${TARGETARCH}".zip && \
     unzip "${ARCHIVE}" -d loki/ && \
     rm "${ARCHIVE}"'
 
-RUN bash -c 'ARCHIVE=otelcol-contrib_"${OPENTELEMETRY_COLLECTOR_VERSION:1}"_linux_"${TARGETARCH}".tar.gz && \
-    curl -sOL https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/"${OPENTELEMETRY_COLLECTOR_VERSION}"/"${ARCHIVE}" && \
-    mkdir otelcol-contrib && \
-    tar xfz "${ARCHIVE}" -C otelcol-contrib/ && \
-    rm "${ARCHIVE}"'
-
 COPY prometheus.yaml .
 COPY run-prometheus.sh .
 COPY grafana-datasources.yaml ./grafana/conf/provisioning/datasources/
@@ -67,8 +61,6 @@ COPY loki-config.yaml .
 COPY run-loki.sh .
 COPY tempo-config.yaml .
 COPY run-tempo.sh .
-COPY otelcol-config.yaml .
-COPY run-otelcol.sh .
 COPY run-all.sh .
 # hadolint ignore=SC2038,DL4006
 RUN find . -maxdepth 1 -type f | xargs dos2unix
