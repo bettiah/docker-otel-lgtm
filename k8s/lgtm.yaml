@@ -11,14 +11,6 @@ spec:
       protocol: TCP
       port: 3000
       targetPort: 3000
-    - name: otel-grpc
-      protocol: TCP
-      port: 4317
-      targetPort: 4317
-    - name: otel-http
-      protocol: TCP
-      port: 4318
-      targetPort: 4318
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,11 +28,9 @@ spec:
     spec:
       containers:
         - name: lgtm
-          image: grafana/otel-lgtm:latest
+          image: ghcr.io/bettiah/docker-otel-lgtm:latest
           ports:
             - containerPort: 3000
-            - containerPort: 4317
-            - containerPort: 4318
           readinessProbe:
             exec:
               command:
